@@ -19,6 +19,8 @@ npm run build
 ```
 npm run lint
 ```
+### Test
+https://vue-pokemon-app.herokuapp.com/#/
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
