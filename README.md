@@ -1,5 +1,7 @@
 # vue-pokemon-app
 
+[![img.png](https://i.postimg.cc/wBzHVZrK/img.png)](https://postimg.cc/zyx9Dt5p)
+
 ## Project setup
 ```
 npm install
