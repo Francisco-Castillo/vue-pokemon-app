@@ -29,7 +29,4 @@ body{
   color: #42b983;
 }
 
-#grad {
-  
-}
 </style>

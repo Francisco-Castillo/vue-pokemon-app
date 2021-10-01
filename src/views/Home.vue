@@ -46,7 +46,6 @@ export default {
     async fetchPokemons() {
       let elements = [];
       const response = await PokemonService.findAll();
-      console.log(response);
       const { results } = response.data;
       for (let pokemon of results) {
         const result = await PokemonService.findByName(pokemon.name);
@@ -99,7 +98,6 @@ img{
    width: 100%;
   height: 150px;
   object-fit: contain;
-
   overflow: hidden;
 }
 </style>
