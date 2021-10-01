@@ -10,7 +10,6 @@
               img-alt="Image"
               img-top
               class="mb-2 p-2"
-              @mouseover="mouseOver"
             >
               <b-card-text>Peso: {{ item.weight }} lbs</b-card-text>
               <b-badge
@@ -51,12 +50,7 @@ export default {
         const result = await PokemonService.findByName(pokemon.name);
         elements.push(result.data);
       }
-      console.log(elements);
       this.items = elements.sort(OrderHelper.methods.sort);
-    },
-
-    mouseOver(){
-      console.log("hover");
     },
 
     badgeColor(type){
@@ -80,7 +74,7 @@ export default {
 
   },
 
-  mounted() {
+  async mounted() {
     this.fetchPokemons();
   },
 };
