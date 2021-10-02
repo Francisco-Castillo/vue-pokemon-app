@@ -3,14 +3,25 @@
     <b-container class="mt-4">
       <b-row>
         <b-col lg="3" v-for="item in items" v-bind:key="item.id">
-          <b-card-group deck>
+          <b-card-group
+            deck
+            class="card-cursor card-relative"
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            title="Detalle"
+            @mouseover="item.hover = true"
+            @mouseout="item.hover = false"
+          >
             <b-card
-              :title="`${item.name}`"
+              :border-variant="item.hover ? 'warning': null"
+              @click="detail(item.id)"
+              :title="item.name"
               :img-src="item.sprites.other.dream_world.front_default"
               img-alt="Image"
               img-top
-              class="mb-2 p-2"
+              class="mb-2 p-2 "
             >
+              <span v-if="item.hover" class="card-absolute">#{{ item.id }}</span>
               <b-card-text>Peso: {{ item.weight }} lbs</b-card-text>
               <b-badge
                 v-for="type in item.types"
@@ -38,10 +49,15 @@ export default {
   data() {
     return {
       items: [],
+      hover: false,
     };
   },
 
   methods: {
+    detail(id) {
+      console.log("REDIRECT POKEMON", id);
+      this.$router.push(`/detailPokemon/${id}`);
+    },
     async fetchPokemons() {
       let elements = [];
       const response = await PokemonService.findAll();
@@ -50,28 +66,29 @@ export default {
         const result = await PokemonService.findByName(pokemon.name);
         elements.push(result.data);
       }
-      this.items = elements.sort(OrderHelper.methods.sort);
+      this.items = elements.map(e => {
+        return   {"hover":false, ...e }  }).sort(OrderHelper.methods.sort);
     },
 
-    badgeColor(type){
-      switch(type){
-        case 'water':
-            return 'info';
-        case 'fire':
+    badgeColor(type) {
+      switch (type) {
+        case "water":
+          return "info";
+        case "fire":
           return "danger";
-        case 'poison':
-          return 'success';
-        case 'flying':
+        case "poison":
+          return "success";
+        case "flying":
           return "primary";
-        case 'bug':
-          return 'warning';
-        case 'grass':
-          return 'dark';
-          
-        default: 'light'
-      }
-    }
+        case "bug":
+          return "warning";
+        case "grass":
+          return "dark";
 
+        default:
+          "light";
+      }
+    },
   },
 
   async mounted() {
@@ -81,17 +98,28 @@ export default {
 </script>
 
 <style scoped>
-.card-group .card{
-  max-width: calc(25% - 30px)
+.card-group .card {
+  max-width: calc(25% - 30px);
 }
-.card-title{
-    text-transform: capitalize;
-    font-weight: bold;
+.card-title {
+  text-transform: capitalize;
+  font-weight: bold;
 }
-img{
-   width: 100%;
+img {
+  width: 100%;
   height: 150px;
   object-fit: contain;
   overflow: hidden;
+}
+.card-cursor :hover {
+  cursor: pointer;
+}
+.card-relative {
+  position: relative;
+}
+.card-absolute {
+  position: absolute;
+  top: 4px;
+  left: 4px;
 }
 </style>
